@@ -1,14 +1,13 @@
-const express = require('express');
-const dotenv = require('dotenv');
-const cors = require('cors');
-const userRoutes = require('./routes/auth.routes');
+const connectToDB = require('./src/db/db');
+const app = require('./src/app');
 
-dotenv.config();
-const app = express();
+const PORT = process.env.PORT || 3000;
 
-
-app.use(express.json());
-
-app.use('/api/users', userRoutes);
-
-module.exports = app;
+connectToDB()
+    .then(() => {
+        app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+    })
+    .catch((err) => {
+        console.error("Failed to connect to DB:", err);
+        process.exit(1);
+    });

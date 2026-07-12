@@ -3,7 +3,6 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 const userRoutes = require('./routes/auth.routes');
 
-
 dotenv.config();
 const app = express();
 
@@ -14,7 +13,6 @@ const allowedOrigins = [
 
 app.use(cors({
     origin: function (origin, callback) {
-        // allow requests with no origin (like Postman, curl, mobile apps)
         if (!origin || allowedOrigins.includes(origin)) {
             callback(null, true);
         } else {
@@ -23,9 +21,8 @@ app.use(cors({
     },
 }));
 
-app.use(cors());
 app.use(express.json());
 
 app.use('/api/users', userRoutes);
 
-module.exports = app
+module.exports = app;
