@@ -1,13 +1,29 @@
-const connectToDb = require('./src/db/db');
-const app = require('./src/app');
+const express = require('express');
+const dotenv = require('dotenv');
+const cors = require('cors');
+const userRoutes = require('./routes/auth.routes');
 
-const PORT = process.env.PORT || 3000;
+dotenv.config();
+const app = express();
 
-connectToDb()
-    .then(() => {
-        app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-    })
-    .catch((err) => {
-        console.log("Failed to connect err", err);
-        process.exit(1);
-    });
+const allowedOrigins = [
+    'http://localhost:5173',              // your local Vite dev server
+    'https://asset-flow-sandy.vercel.app', // your deployed frontend
+];
+
+app.use(cors({
+    origin: function (origin, callback) {
+        // allow requests with no origin (like Postman, curl, mobile apps)
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+}));
+
+app.use(express.json());
+
+app.use('/api/users', userRoutes);
+
+module.exports = app;
