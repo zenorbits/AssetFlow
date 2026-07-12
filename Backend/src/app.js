@@ -11,15 +11,19 @@ const allowedOrigins = [
     'https://asset-flow-sandy.vercel.app',
 ];
 
-app.use(cors({
+const corsOptions = {
     origin: function (origin, callback) {
+        console.log('CORS check — incoming origin:', origin);
         if (!origin || allowedOrigins.includes(origin)) {
             callback(null, true);
         } else {
-            callback(new Error('Not allowed by CORS'));
+            callback(new Error('Not allowed by CORS: ' + origin));
         }
     },
-}));
+};
+
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions)); // explicitly handle preflight for all routes
 
 app.use(express.json());
 
