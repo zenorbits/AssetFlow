@@ -24,7 +24,7 @@ import {
 
 /* ────────────────────────────────────────────────────────────────────────
  * AssetFlow — Login & Signup
- * Frontend-only UI. No backend, auth, database or API calls are wired up.
+ * Frontend now wired to a real backend (register + login endpoints).
  * Everything (UI primitives, brand panel, forms, modal) lives in this one
  * file by request; each section is commented as its own "component".
  * ──────────────────────────────────────────────────────────────────────── */
@@ -38,6 +38,35 @@ const DEPARTMENTS = [
   'Operations',
   'Procurement',
 ];
+
+/* ── API layer ─────────────────────────────────────────────────────────
+ * Adjust API_BASE if your backend runs somewhere other than
+ * http://localhost:3000. In production, prefer an env var, e.g.
+ * import.meta.env.VITE_API_BASE_URL for Vite projects.
+ * ──────────────────────────────────────────────────────────────────────── */
+
+const API_BASE = 'http://localhost:3000/api/users';
+
+async function apiRequest(path, body) {
+  const res = await fetch(`${API_BASE}${path}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+
+  let data;
+  try {
+    data = await res.json();
+  } catch {
+    data = {};
+  }
+
+  if (!res.ok) {
+    throw new Error(data.message || 'Something went wrong. Please try again.');
+  }
+
+  return data;
+}
 
 /* ── UI primitive: Button ─────────────────────────────────────────────── */
 
@@ -483,13 +512,13 @@ function BrandPanel() {
 }
 
 /* ── Login form ────────────────────────────────────────────────────────
- * Presentational only. Field checks exist purely to demonstrate validation
- * UI states (empty / invalid / mismatch) — there is no real auth call.
+ * Wired to POST {API_BASE}/login. Stores the returned JWT + user in
+ * sessionStorage (or localStorage if "Remember me" is checked).
  * ──────────────────────────────────────────────────────────────────────── */
 
 const loginInitialTouched = { email: false, password: false };
 
-function LoginForm({ onOpenSignup }) {
+function LoginForm({ onOpenSignup, onLoginSuccess }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -497,6 +526,7 @@ function LoginForm({ onOpenSignup }) {
   const [touched, setTouched] = useState(loginInitialTouched);
   const [isLoading, setIsLoading] = useState(false);
   const [status, setStatus] = useState(null); // null | 'success' | 'error'
+  const [errorMessage, setErrorMessage] = useState('');
 
   const emailError = touched.email && !email
     ? 'Email address is required.'
@@ -508,32 +538,40 @@ function LoginForm({ onOpenSignup }) {
 
   const handleBlur = (field) => () => setTouched((prev) => ({ ...prev, [field]: true }));
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setTouched({ email: true, password: true });
     setStatus(null);
 
     if (!email || !password || !EMAIL_PATTERN.test(email)) {
       setStatus('error');
+      setErrorMessage('Check your email and password and try again.');
       return;
     }
 
     setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
+    try {
+      const data = await apiRequest('/login', { email, password });
+
+      const storage = rememberMe ? localStorage : sessionStorage;
+      storage.setItem('token', data.token);
+      storage.setItem('user', JSON.stringify(data.user));
+
       setStatus('success');
-    }, 1400);
+      onLoginSuccess?.(data);
+    } catch (err) {
+      setStatus('error');
+      setErrorMessage(err.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <form className="space-y-5" onSubmit={handleSubmit} noValidate>
-      {status === 'error' && (
-        <Alert variant="error">Check your email and password and try again.</Alert>
-      )}
+      {status === 'error' && <Alert variant="error">{errorMessage}</Alert>}
       {status === 'success' && (
-        <Alert variant="success">
-          Credentials look good — this is a UI placeholder, no session was created.
-        </Alert>
+        <Alert variant="success">Login successful — redirecting…</Alert>
       )}
 
       <Input
@@ -606,7 +644,14 @@ function LoginForm({ onOpenSignup }) {
   );
 }
 
-/* ── Signup modal ─────────────────────────────────────────────────────── */
+/* ── Signup modal ─────────────────────────────────────────────────────
+ * Wired to POST {API_BASE}/register. `fullName` is sent as `username`
+ * since that's the field name on the backend user model.
+ *
+ * NOTE: `department` is included in the payload but your Mongoose
+ * schema needs a matching field for it to actually persist — otherwise
+ * Mongoose silently drops it on save.
+ * ──────────────────────────────────────────────────────────────────────── */
 
 const signupInitialForm = {
   fullName: '',
@@ -630,6 +675,7 @@ function SignupModal({ isOpen, onClose }) {
   const [showConfirm, setShowConfirm] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [status, setStatus] = useState(null);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const updateField = (field) => (e) =>
     setForm((prev) => ({ ...prev, [field]: e.target.value }));
@@ -652,7 +698,16 @@ function SignupModal({ isOpen, onClose }) {
         : '',
   };
 
-  const handleSubmit = (e) => {
+  const handleClose = () => {
+    onClose();
+    setForm(signupInitialForm);
+    setTouched(signupInitialTouched);
+    setStatus(null);
+    setIsLoading(false);
+    setErrorMessage('');
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setTouched({
       fullName: true,
@@ -673,22 +728,30 @@ function SignupModal({ isOpen, onClose }) {
 
     if (hasError) {
       setStatus('error');
+      setErrorMessage('Please resolve the highlighted fields.');
       return;
     }
 
     setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-      setStatus('success');
-    }, 1400);
-  };
+    try {
+      await apiRequest('/register', {
+        username: form.fullName,
+        email: form.email,
+        password: form.password,
+        confirmPassword: form.confirmPassword,
+        department: form.department,
+      });
 
-  const handleClose = () => {
-    onClose();
-    setForm(signupInitialForm);
-    setTouched(signupInitialTouched);
-    setStatus(null);
-    setIsLoading(false);
+      setStatus('success');
+      setTimeout(() => {
+        handleClose();
+      }, 1200);
+    } catch (err) {
+      setStatus('error');
+      setErrorMessage(err.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -699,13 +762,9 @@ function SignupModal({ isOpen, onClose }) {
       description="Set up access for a new team member."
     >
       <form className="space-y-4" onSubmit={handleSubmit} noValidate>
-        {status === 'error' && (
-          <Alert variant="error">Please resolve the highlighted fields.</Alert>
-        )}
+        {status === 'error' && <Alert variant="error">{errorMessage}</Alert>}
         {status === 'success' && (
-          <Alert variant="success">
-            Details captured — this is a UI placeholder, no account was created.
-          </Alert>
+          <Alert variant="success">Account created successfully!</Alert>
         )}
 
         <Input
@@ -812,6 +871,12 @@ function SignupModal({ isOpen, onClose }) {
 export default function AuthPage() {
   const [isSignupOpen, setIsSignupOpen] = useState(false);
 
+  // TODO: if using react-router-dom, replace this with useNavigate()
+  // and redirect to your dashboard route, e.g. navigate('/dashboard').
+  const handleLoginSuccess = (data) => {
+    console.log('Logged in:', data.user);
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -849,7 +914,10 @@ export default function AuthPage() {
               </p>
             </div>
 
-            <LoginForm onOpenSignup={() => setIsSignupOpen(true)} />
+            <LoginForm
+              onOpenSignup={() => setIsSignupOpen(true)}
+              onLoginSuccess={handleLoginSuccess}
+            />
           </Card>
 
           <p className="mt-6 text-center text-xs text-slate-light">

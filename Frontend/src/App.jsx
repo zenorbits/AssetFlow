@@ -1,10 +1,10 @@
 import React from 'react'
-import Dashboard from './components/Dashboard'
+import AuthPage from './components/Authpage'
 
 const App = () => {
   return (
     <div>
-      <Dashboard/>
+      <AuthPage/>
     </div>
   )
 }
