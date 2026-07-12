@@ -7,8 +7,8 @@ dotenv.config();
 const app = express();
 
 const allowedOrigins = [
-    'http://localhost:5173',              // your local Vite dev server
-    'https://asset-flow-sandy.vercel.app', // your deployed frontend
+    'http://localhost:5173',
+    'https://asset-flow-sandy.vercel.app',
 ];
 
 app.use(cors({

@@ -46,7 +46,7 @@ const DEPARTMENTS = [
  * import.meta.env.VITE_API_BASE_URL for Vite projects.
  * ──────────────────────────────────────────────────────────────────────── */
 
-const API_BASE = 'http://localhost:3000/api/users';
+const API_BASE = 'https://assetflow-0k9g.onrender.com/api/users';
 
 async function apiRequest(path, body) {
   const res = await fetch(`${API_BASE}${path}`, {
