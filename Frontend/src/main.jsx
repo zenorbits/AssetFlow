@@ -10,12 +10,7 @@ import Dashboard from './components/Dashboard.jsx' // wherever your dashboard li
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="/analysis" element={<ReportsAnalytics/>} />
-        <Route path="/audit" element={<Audit/>} />
-        <Route path="/dashboard" element={<Dashboard />} /> 
-      </Routes>
+ <App/>
     </BrowserRouter>
   </StrictMode>,
 )

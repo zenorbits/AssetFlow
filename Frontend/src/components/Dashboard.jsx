@@ -1,10 +1,10 @@
 // src/pages/Dashboard.jsx
 //
-// AssetFlow — Dashboard page (single file).
+// AssetFlow — Dashboard page (single file, light mode only).
 // Mount inside your existing Sidebar/Navbar layout, e.g.:
 //   <AppLayout><Dashboard /></AppLayout>
 //
-// Requires Tailwind with `darkMode: "class"`, plus:
+// Requires:
 //   npm install framer-motion lucide-react
 //
 // All data is placeholder only — no API / backend calls.
@@ -74,25 +74,25 @@ const categoryBreakdown = [
 ];
 
 const recentActivity = [
-  { id: 1, actor: "Marcus Lee", action: "checked out", target: "Dell Latitude 5440 (#IT-2291)", time: "12 min ago", icon: LogOut, wrap: "bg-indigo-50 text-indigo-600 dark:bg-indigo-500/10 dark:text-indigo-400" },
-  { id: 2, actor: "System", action: "flagged", target: "Forklift Unit 3 for overdue maintenance", time: "48 min ago", icon: AlertTriangle, wrap: "bg-rose-50 text-rose-600 dark:bg-rose-500/10 dark:text-rose-400" },
-  { id: 3, actor: "Priya Nair", action: "approved transfer of", target: "12 office chairs to Floor 4", time: "1 hr ago", icon: ArrowLeftRight, wrap: "bg-amber-50 text-amber-600 dark:bg-amber-500/10 dark:text-amber-400" },
-  { id: 4, actor: "James Ortiz", action: "returned", target: "Canon EOS R5 (#CAM-0087)", time: "2 hr ago", icon: Undo2, wrap: "bg-emerald-50 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-400" },
-  { id: 5, actor: "Sofia Chen", action: "booked", target: "Conference Room A/V Kit", time: "3 hr ago", icon: CalendarCheck2, wrap: "bg-sky-50 text-sky-600 dark:bg-sky-500/10 dark:text-sky-400" },
+  { id: 1, actor: "Marcus Lee", action: "checked out", target: "Dell Latitude 5440 (#IT-2291)", time: "12 min ago", icon: LogOut, wrap: "bg-indigo-50 text-indigo-600" },
+  { id: 2, actor: "System", action: "flagged", target: "Forklift Unit 3 for overdue maintenance", time: "48 min ago", icon: AlertTriangle, wrap: "bg-rose-50 text-rose-600" },
+  { id: 3, actor: "Priya Nair", action: "approved transfer of", target: "12 office chairs to Floor 4", time: "1 hr ago", icon: ArrowLeftRight, wrap: "bg-amber-50 text-amber-600" },
+  { id: 4, actor: "James Ortiz", action: "returned", target: "Canon EOS R5 (#CAM-0087)", time: "2 hr ago", icon: Undo2, wrap: "bg-emerald-50 text-emerald-600" },
+  { id: 5, actor: "Sofia Chen", action: "booked", target: "Conference Room A/V Kit", time: "3 hr ago", icon: CalendarCheck2, wrap: "bg-sky-50 text-sky-600" },
 ];
 
 const notifications = [
-  { id: 1, title: "Maintenance overdue", message: "Forklift Unit 3 has missed its scheduled service window.", time: "10 min ago", unread: true, icon: AlertCircle, dot: "bg-rose-500", wrap: "bg-rose-50 text-rose-600 dark:bg-rose-500/10 dark:text-rose-400" },
-  { id: 2, title: "Transfer awaiting approval", message: "Warehouse B requested 5 pallet jacks.", time: "35 min ago", unread: true, icon: TriangleAlert, dot: "bg-amber-500", wrap: "bg-amber-50 text-amber-600 dark:bg-amber-500/10 dark:text-amber-400" },
-  { id: 3, title: "Return reminder", message: "8 laptops are due back tomorrow.", time: "2 hr ago", unread: false, icon: Info, dot: "bg-sky-500", wrap: "bg-sky-50 text-sky-600 dark:bg-sky-500/10 dark:text-sky-400" },
-  { id: 4, title: "New asset registered", message: "MacBook Pro 16\" added to IT inventory.", time: "5 hr ago", unread: false, icon: Info, dot: "bg-sky-500", wrap: "bg-sky-50 text-sky-600 dark:bg-sky-500/10 dark:text-sky-400" },
+  { id: 1, title: "Maintenance overdue", message: "Forklift Unit 3 has missed its scheduled service window.", time: "10 min ago", unread: true, icon: AlertCircle, dot: "bg-rose-500", wrap: "bg-rose-50 text-rose-600" },
+  { id: 2, title: "Transfer awaiting approval", message: "Warehouse B requested 5 pallet jacks.", time: "35 min ago", unread: true, icon: TriangleAlert, dot: "bg-amber-500", wrap: "bg-amber-50 text-amber-600" },
+  { id: 3, title: "Return reminder", message: "8 laptops are due back tomorrow.", time: "2 hr ago", unread: false, icon: Info, dot: "bg-sky-500", wrap: "bg-sky-50 text-sky-600" },
+  { id: 4, title: "New asset registered", message: "MacBook Pro 16\" added to IT inventory.", time: "5 hr ago", unread: false, icon: Info, dot: "bg-sky-500", wrap: "bg-sky-50 text-sky-600" },
 ];
 
 const quickActions = [
-  { id: "add-asset", label: "Add Asset", description: "Register a new asset", icon: PackagePlus, accent: "bg-indigo-50 text-indigo-600 dark:bg-indigo-500/10 dark:text-indigo-400 group-hover:bg-indigo-600 group-hover:text-white dark:group-hover:bg-indigo-500" },
-  { id: "new-booking", label: "New Booking", description: "Reserve an asset", icon: CalendarPlus, accent: "bg-sky-50 text-sky-600 dark:bg-sky-500/10 dark:text-sky-400 group-hover:bg-sky-600 group-hover:text-white dark:group-hover:bg-sky-500" },
-  { id: "request-transfer", label: "Request Transfer", description: "Move assets between sites", icon: Send, accent: "bg-emerald-50 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-400 group-hover:bg-emerald-600 group-hover:text-white dark:group-hover:bg-emerald-500" },
-  { id: "schedule-maintenance", label: "Schedule Maintenance", description: "Plan service work", icon: Wrench, accent: "bg-amber-50 text-amber-600 dark:bg-amber-500/10 dark:text-amber-400 group-hover:bg-amber-600 group-hover:text-white dark:group-hover:bg-amber-500" },
+  { id: "add-asset", label: "Add Asset", description: "Register a new asset", icon: PackagePlus, accent: "bg-indigo-50 text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white" },
+  { id: "new-booking", label: "New Booking", description: "Reserve an asset", icon: CalendarPlus, accent: "bg-sky-50 text-sky-600 group-hover:bg-sky-600 group-hover:text-white" },
+  { id: "request-transfer", label: "Request Transfer", description: "Move assets between sites", icon: Send, accent: "bg-emerald-50 text-emerald-600 group-hover:bg-emerald-600 group-hover:text-white" },
+  { id: "schedule-maintenance", label: "Schedule Maintenance", description: "Plan service work", icon: Wrench, accent: "bg-amber-50 text-amber-600 group-hover:bg-amber-600 group-hover:text-white" },
 ];
 
 const initialTasks = [
@@ -104,18 +104,18 @@ const initialTasks = [
 ];
 
 const kpiAccent = {
-  emerald: "bg-emerald-50 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-400 group-hover:ring-emerald-200 dark:group-hover:ring-emerald-500/30",
-  indigo: "bg-indigo-50 text-indigo-600 dark:bg-indigo-500/10 dark:text-indigo-400 group-hover:ring-indigo-200 dark:group-hover:ring-indigo-500/30",
-  sky: "bg-sky-50 text-sky-600 dark:bg-sky-500/10 dark:text-sky-400 group-hover:ring-sky-200 dark:group-hover:ring-sky-500/30",
-  amber: "bg-amber-50 text-amber-600 dark:bg-amber-500/10 dark:text-amber-400 group-hover:ring-amber-200 dark:group-hover:ring-amber-500/30",
-  rose: "bg-rose-50 text-rose-600 dark:bg-rose-500/10 dark:text-rose-400 group-hover:ring-rose-200 dark:group-hover:ring-rose-500/30",
-  violet: "bg-violet-50 text-violet-600 dark:bg-violet-500/10 dark:text-violet-400 group-hover:ring-violet-200 dark:group-hover:ring-violet-500/30",
+  emerald: "bg-emerald-50 text-emerald-600 group-hover:ring-emerald-200",
+  indigo: "bg-indigo-50 text-indigo-600 group-hover:ring-indigo-200",
+  sky: "bg-sky-50 text-sky-600 group-hover:ring-sky-200",
+  amber: "bg-amber-50 text-amber-600 group-hover:ring-amber-200",
+  rose: "bg-rose-50 text-rose-600 group-hover:ring-rose-200",
+  violet: "bg-violet-50 text-violet-600 group-hover:ring-violet-200",
 };
 
 const priorityStyles = {
-  high: "bg-rose-50 text-rose-600 dark:bg-rose-500/10 dark:text-rose-400",
-  medium: "bg-amber-50 text-amber-600 dark:bg-amber-500/10 dark:text-amber-400",
-  low: "bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300",
+  high: "bg-rose-50 text-rose-600",
+  medium: "bg-amber-50 text-amber-600",
+  low: "bg-slate-100 text-slate-600",
 };
 
 /* ------------------------------------------------------------------ */
@@ -147,7 +147,7 @@ export default function Dashboard() {
   const unreadCount = notifications.filter((n) => n.unread).length;
 
   return (
-    <div className="min-h-full w-full bg-slate-50 px-4 py-6 dark:bg-slate-950 sm:px-6 lg:px-8 lg:py-8">
+    <div className="min-h-full w-full bg-slate-50 px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
       <div className="mx-auto flex max-w-[1600px] flex-col gap-6">
 
         {/* ---------------- Welcome ---------------- */}
@@ -155,27 +155,27 @@ export default function Dashboard() {
           initial={{ opacity: 0, y: -12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, ease: "easeOut" }}
-          className="flex flex-col gap-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:flex-row sm:items-center sm:justify-between"
+          className="flex flex-col gap-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between"
         >
           <div className="flex items-center gap-4">
-            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-indigo-600 text-sm font-semibold text-white dark:bg-indigo-500">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-indigo-600 text-sm font-semibold text-white">
               {currentUser.avatarInitials}
             </div>
             <div>
-              <h1 className="text-xl font-semibold text-slate-900 dark:text-white sm:text-2xl">
+              <h1 className="text-xl font-semibold text-slate-900 sm:text-2xl">
                 {greeting}, {currentUser.name.split(" ")[0]}
               </h1>
-              <p className="mt-0.5 text-sm text-slate-500 dark:text-slate-400">
+              <p className="mt-0.5 text-sm text-slate-500">
                 {today} · Here&apos;s what&apos;s happening across your assets today.
               </p>
             </div>
           </div>
           <div className="flex shrink-0 gap-2">
-            <button className="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-3.5 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800">
+            <button className="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-3.5 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50">
               <Download className="h-4 w-4" />
               Export Report
             </button>
-            <button className="inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-3.5 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600">
+            <button className="inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-3.5 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-indigo-700">
               <Plus className="h-4 w-4" />
               Add Asset
             </button>
@@ -199,7 +199,7 @@ export default function Dashboard() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.35, delay: i * 0.05, ease: "easeOut" }}
                 whileHover={{ y: -3 }}
-                className="group rounded-2xl border border-slate-200 bg-white p-5 shadow-sm ring-1 ring-transparent transition-all dark:border-slate-800 dark:bg-slate-900"
+                className="group rounded-2xl border border-slate-200 bg-white p-5 shadow-sm ring-1 ring-transparent transition-all"
               >
                 <div className="flex items-start justify-between">
                   <div className={`flex h-10 w-10 items-center justify-center rounded-xl ${kpiAccent[kpi.accent]}`}>
@@ -208,18 +208,18 @@ export default function Dashboard() {
                   <span
                     className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium ${
                       isUp
-                        ? "bg-emerald-50 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-400"
-                        : "bg-rose-50 text-rose-600 dark:bg-rose-500/10 dark:text-rose-400"
+                        ? "bg-emerald-50 text-emerald-600"
+                        : "bg-rose-50 text-rose-600"
                     }`}
                   >
                     {isUp ? <TrendingUp className="h-3 w-3" /> : <TrendingDown className="h-3 w-3" />}
                     {kpi.delta}
                   </span>
                 </div>
-                <p className="mt-4 text-2xl font-semibold tracking-tight text-slate-900 dark:text-white">
+                <p className="mt-4 text-2xl font-semibold tracking-tight text-slate-900">
                   {kpi.value.toLocaleString()}
                 </p>
-                <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{kpi.label}</p>
+                <p className="mt-1 text-sm text-slate-500">{kpi.label}</p>
               </motion.div>
             );
           })}
@@ -232,19 +232,19 @@ export default function Dashboard() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.35, delay: 0.05, ease: "easeOut" }}
-            className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900 lg:col-span-2"
+            className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm lg:col-span-2"
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-indigo-50 text-indigo-600 dark:bg-indigo-500/10 dark:text-indigo-400">
+                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-indigo-50 text-indigo-600">
                   <BarChart3 className="h-4.5 w-4.5" />
                 </div>
                 <div>
-                  <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Allocation Activity</h3>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">Last 7 days · placeholder data</p>
+                  <h3 className="text-sm font-semibold text-slate-900">Allocation Activity</h3>
+                  <p className="text-xs text-slate-500">Last 7 days · placeholder data</p>
                 </div>
               </div>
-              <button className="rounded-lg p-1.5 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-600 dark:hover:bg-slate-800 dark:hover:text-slate-300" aria-label="More options">
+              <button className="rounded-lg p-1.5 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-600" aria-label="More options">
                 <MoreHorizontal className="h-4 w-4" />
               </button>
             </div>
@@ -256,10 +256,10 @@ export default function Dashboard() {
                       initial={{ height: 0 }}
                       animate={{ height: `${(day.value / maxTrend) * 100}%` }}
                       transition={{ duration: 0.6, delay: 0.15 + i * 0.05, ease: "easeOut" }}
-                      className="w-full max-w-9 rounded-t-md bg-gradient-to-t from-indigo-600 to-indigo-400 dark:from-indigo-500 dark:to-indigo-300"
+                      className="w-full max-w-9 rounded-t-md bg-gradient-to-t from-indigo-600 to-indigo-400"
                     />
                   </div>
-                  <span className="text-xs font-medium text-slate-400 dark:text-slate-500">{day.label}</span>
+                  <span className="text-xs font-medium text-slate-400">{day.label}</span>
                 </div>
               ))}
             </div>
@@ -270,15 +270,15 @@ export default function Dashboard() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.35, delay: 0.1, ease: "easeOut" }}
-            className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900"
+            className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
           >
             <div className="flex items-center gap-2">
-              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-violet-50 text-violet-600 dark:bg-violet-500/10 dark:text-violet-400">
+              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-violet-50 text-violet-600">
                 <PieChart className="h-4.5 w-4.5" />
               </div>
               <div>
-                <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Asset Categories</h3>
-                <p className="text-xs text-slate-500 dark:text-slate-400">By share of inventory</p>
+                <h3 className="text-sm font-semibold text-slate-900">Asset Categories</h3>
+                <p className="text-xs text-slate-500">By share of inventory</p>
               </div>
             </div>
             <div className="mt-6 flex items-center justify-center">
@@ -289,19 +289,19 @@ export default function Dashboard() {
                 className="relative h-32 w-32 rounded-full"
                 style={{ background: `conic-gradient(${conic})` }}
               >
-                <div className="absolute inset-3 flex items-center justify-center rounded-full bg-white dark:bg-slate-900">
-                  <span className="text-sm font-semibold text-slate-900 dark:text-white">100%</span>
+                <div className="absolute inset-3 flex items-center justify-center rounded-full bg-white">
+                  <span className="text-sm font-semibold text-slate-900">100%</span>
                 </div>
               </motion.div>
             </div>
             <ul className="mt-6 space-y-2.5">
               {categoryBreakdown.map((c) => (
                 <li key={c.label} className="flex items-center justify-between text-xs">
-                  <span className="flex items-center gap-2 text-slate-600 dark:text-slate-300">
+                  <span className="flex items-center gap-2 text-slate-600">
                     <span className="h-2 w-2 rounded-full" style={{ backgroundColor: c.color }} />
                     {c.label}
                   </span>
-                  <span className="font-medium text-slate-900 dark:text-white">{c.value}%</span>
+                  <span className="font-medium text-slate-900">{c.value}%</span>
                 </li>
               ))}
             </ul>
@@ -316,15 +316,15 @@ export default function Dashboard() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.35, ease: "easeOut" }}
-            className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900"
+            className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
           >
             <div className="flex items-center gap-2">
-              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300">
+              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-100 text-slate-600">
                 <History className="h-4.5 w-4.5" />
               </div>
               <div>
-                <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Recent Activity</h3>
-                <p className="text-xs text-slate-500 dark:text-slate-400">Latest asset movements</p>
+                <h3 className="text-sm font-semibold text-slate-900">Recent Activity</h3>
+                <p className="text-xs text-slate-500">Latest asset movements</p>
               </div>
             </div>
             <ul className="mt-5 space-y-1">
@@ -336,24 +336,24 @@ export default function Dashboard() {
                     initial={{ opacity: 0, x: -8 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.3, delay: 0.05 + i * 0.05 }}
-                    className="flex items-start gap-3 rounded-xl px-2 py-2.5 transition-colors hover:bg-slate-50 dark:hover:bg-slate-800/60"
+                    className="flex items-start gap-3 rounded-xl px-2 py-2.5 transition-colors hover:bg-slate-50"
                   >
                     <div className={`mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full ${item.wrap}`}>
                       <Icon className="h-4 w-4" />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <p className="text-sm text-slate-700 dark:text-slate-200">
-                        <span className="font-medium text-slate-900 dark:text-white">{item.actor}</span>{" "}
+                      <p className="text-sm text-slate-700">
+                        <span className="font-medium text-slate-900">{item.actor}</span>{" "}
                         {item.action}{" "}
-                        <span className="font-medium text-slate-900 dark:text-white">{item.target}</span>
+                        <span className="font-medium text-slate-900">{item.target}</span>
                       </p>
-                      <p className="mt-0.5 text-xs text-slate-400 dark:text-slate-500">{item.time}</p>
+                      <p className="mt-0.5 text-xs text-slate-400">{item.time}</p>
                     </div>
                   </motion.li>
                 );
               })}
             </ul>
-            <button className="mt-4 w-full rounded-lg border border-slate-200 py-2 text-xs font-medium text-slate-600 transition-colors hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800">
+            <button className="mt-4 w-full rounded-lg border border-slate-200 py-2 text-xs font-medium text-slate-600 transition-colors hover:bg-slate-50">
               View all activity
             </button>
           </motion.div>
@@ -363,20 +363,20 @@ export default function Dashboard() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.35, delay: 0.05, ease: "easeOut" }}
-            className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900"
+            className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300">
+                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-100 text-slate-600">
                   <Bell className="h-4.5 w-4.5" />
                 </div>
                 <div>
-                  <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Notifications</h3>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">{unreadCount} unread</p>
+                  <h3 className="text-sm font-semibold text-slate-900">Notifications</h3>
+                  <p className="text-xs text-slate-500">{unreadCount} unread</p>
                 </div>
               </div>
               {unreadCount > 0 && (
-                <span className="rounded-full bg-indigo-600 px-2 py-0.5 text-xs font-medium text-white dark:bg-indigo-500">
+                <span className="rounded-full bg-indigo-600 px-2 py-0.5 text-xs font-medium text-white">
                   {unreadCount}
                 </span>
               )}
@@ -390,22 +390,22 @@ export default function Dashboard() {
                     initial={{ opacity: 0, x: 8 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.3, delay: 0.05 + i * 0.05 }}
-                    className="relative flex items-start gap-3 rounded-xl px-2 py-2.5 transition-colors hover:bg-slate-50 dark:hover:bg-slate-800/60"
+                    className="relative flex items-start gap-3 rounded-xl px-2 py-2.5 transition-colors hover:bg-slate-50"
                   >
                     {n.unread && <span className={`absolute left-0 top-3.5 h-1.5 w-1.5 rounded-full ${n.dot}`} />}
                     <div className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full ${n.wrap}`}>
                       <Icon className="h-4 w-4" />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <p className="text-sm font-medium text-slate-900 dark:text-white">{n.title}</p>
-                      <p className="mt-0.5 truncate text-xs text-slate-500 dark:text-slate-400">{n.message}</p>
-                      <p className="mt-0.5 text-[11px] text-slate-400 dark:text-slate-500">{n.time}</p>
+                      <p className="text-sm font-medium text-slate-900">{n.title}</p>
+                      <p className="mt-0.5 truncate text-xs text-slate-500">{n.message}</p>
+                      <p className="mt-0.5 text-[11px] text-slate-400">{n.time}</p>
                     </div>
                   </motion.li>
                 );
               })}
             </ul>
-            <button className="mt-4 w-full rounded-lg border border-slate-200 py-2 text-xs font-medium text-slate-600 transition-colors hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800">
+            <button className="mt-4 w-full rounded-lg border border-slate-200 py-2 text-xs font-medium text-slate-600 transition-colors hover:bg-slate-50">
               View all notifications
             </button>
           </motion.div>
@@ -415,15 +415,15 @@ export default function Dashboard() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.35, delay: 0.1, ease: "easeOut" }}
-            className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900"
+            className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
           >
             <div className="flex items-center gap-2">
-              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300">
+              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-100 text-slate-600">
                 <ListChecks className="h-4.5 w-4.5" />
               </div>
               <div>
-                <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Upcoming Tasks</h3>
-                <p className="text-xs text-slate-500 dark:text-slate-400">
+                <h3 className="text-sm font-semibold text-slate-900">Upcoming Tasks</h3>
+                <p className="text-xs text-slate-500">
                   {tasks.filter((t) => !t.done).length} pending
                 </p>
               </div>
@@ -435,7 +435,7 @@ export default function Dashboard() {
                   initial={{ opacity: 0, x: -8 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.3, delay: 0.05 + i * 0.05 }}
-                  className="flex items-center gap-3 rounded-xl px-2 py-2.5 transition-colors hover:bg-slate-50 dark:hover:bg-slate-800/60"
+                  className="flex items-center gap-3 rounded-xl px-2 py-2.5 transition-colors hover:bg-slate-50"
                 >
                   <button
                     onClick={() => toggleTask(task.id)}
@@ -443,17 +443,17 @@ export default function Dashboard() {
                     aria-label={task.done ? "Mark task as not done" : "Mark task as done"}
                     className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-md border transition-colors ${
                       task.done
-                        ? "border-indigo-600 bg-indigo-600 dark:border-indigo-500 dark:bg-indigo-500"
-                        : "border-slate-300 dark:border-slate-600"
+                        ? "border-indigo-600 bg-indigo-600"
+                        : "border-slate-300"
                     }`}
                   >
                     {task.done && <Check className="h-3.5 w-3.5 text-white" strokeWidth={3} />}
                   </button>
                   <div className="min-w-0 flex-1">
-                    <p className={`text-sm ${task.done ? "text-slate-400 line-through dark:text-slate-500" : "text-slate-700 dark:text-slate-200"}`}>
+                    <p className={`text-sm ${task.done ? "text-slate-400 line-through" : "text-slate-700"}`}>
                       {task.title}
                     </p>
-                    <p className="mt-0.5 text-xs text-slate-400 dark:text-slate-500">{task.due}</p>
+                    <p className="mt-0.5 text-xs text-slate-400">{task.due}</p>
                   </div>
                   <span className={`shrink-0 rounded-full px-2 py-0.5 text-[11px] font-medium capitalize ${priorityStyles[task.priority]}`}>
                     {task.priority}
@@ -469,15 +469,15 @@ export default function Dashboard() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35, ease: "easeOut" }}
-          className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900"
+          className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm"
         >
           <div className="flex items-center gap-2">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300">
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-100 text-slate-600">
               <Zap className="h-4.5 w-4.5" />
             </div>
             <div>
-              <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Quick Actions</h3>
-              <p className="text-xs text-slate-500 dark:text-slate-400">Common tasks, one click away</p>
+              <h3 className="text-sm font-semibold text-slate-900">Quick Actions</h3>
+              <p className="text-xs text-slate-500">Common tasks, one click away</p>
             </div>
           </div>
           <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -491,14 +491,14 @@ export default function Dashboard() {
                   transition={{ duration: 0.25, delay: 0.05 + i * 0.05 }}
                   whileHover={{ y: -2 }}
                   whileTap={{ scale: 0.97 }}
-                  className="group flex flex-col items-start gap-3 rounded-xl border border-slate-200 p-3.5 text-left transition-colors hover:border-transparent hover:shadow-md dark:border-slate-800"
+                  className="group flex flex-col items-start gap-3 rounded-xl border border-slate-200 p-3.5 text-left transition-colors hover:border-transparent hover:shadow-md"
                 >
                   <div className={`flex h-9 w-9 items-center justify-center rounded-lg transition-colors ${action.accent}`}>
                     <Icon className="h-4.5 w-4.5" />
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-slate-900 dark:text-white">{action.label}</p>
-                    <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">{action.description}</p>
+                    <p className="text-sm font-medium text-slate-900">{action.label}</p>
+                    <p className="mt-0.5 text-xs text-slate-500">{action.description}</p>
                   </div>
                 </motion.button>
               );
