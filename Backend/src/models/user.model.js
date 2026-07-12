@@ -5,5 +5,23 @@ const userSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    ema
+    email:{
+        type:String,
+        required:true,
+        unique:true
+    },
+    password:{
+        type:String,
+        required:true
+    },
+    role:{
+        type:String,
+        required:true,
+        enum:['employee','departmenthead','assetmanager','admin'],
+        default:'employee'
+    }
 })
+
+const userModel = mongoose.model('User',userSchema);
+
+module.exports = userModel;
