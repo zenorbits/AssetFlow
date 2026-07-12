@@ -8,7 +8,7 @@ const app = express();
 
 const allowedOrigins = [
     'http://localhost:5173',
-    'https://assetflowbackedn.onrender.com',
+    'https://asset-flow-sandy.vercel.app',
 ];
 
 const corsOptions = {
@@ -23,7 +23,6 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-app.options('*', cors(corsOptions)); // explicitly handle preflight for all routes
 
 app.use(express.json());
 
