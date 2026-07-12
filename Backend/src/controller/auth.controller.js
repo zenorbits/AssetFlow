@@ -3,7 +3,15 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const registerUser = async (req, res) => {
-    const { username, email, password } = req.body;
+    const { username, email, password, confirmPassword } = req.body;
+
+    if (!username || !email || !password || !confirmPassword) {
+        return res.status(400).json({ message: 'Username, email, password and confirm password are required' });
+    }
+
+    if (password !== confirmPassword) {
+        return res.status(400).json({ message: 'Passwords do not match' });
+    }
 
     try {
         const userExists = await userModel.findOne({ email });
@@ -74,4 +82,4 @@ const loginUser = async (req, res) => {
         return res.status(500).json({ message: 'Server error' });
     }
 };
-module.exports = { registerUser };
+module.exports = { registerUser,loginUser };
