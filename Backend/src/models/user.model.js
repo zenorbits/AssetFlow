@@ -19,7 +19,19 @@ const userSchema = new mongoose.Schema({
         required:false,
         enum:['employee','departmenthead','assetmanager','admin'],
         default:'employee'
-    }
+    },
+    department: {
+    type: String,
+    required: true,
+    enum: [
+        'Information Technology',
+        'Facilities',
+        'Human Resources',
+        'Finance',
+        'Operations',
+        'Procurement',
+    ],
+},
 })
 
 const userModel = mongoose.model('User',userSchema);

@@ -3,10 +3,10 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const registerUser = async (req, res) => {
-    const { username, email, password, confirmPassword } = req.body;
+    const { username, email, password, confirmPassword, department } = req.body;
 
-    if (!username || !email || !password || !confirmPassword) {
-        return res.status(400).json({ message: 'Username, email, password and confirm password are required' });
+    if (!username || !email || !password || !confirmPassword || !department) {
+        return res.status(400).json({ message: 'Username, email, password, confirm password and department are required' });
     }
 
     if (password !== confirmPassword) {
@@ -25,6 +25,7 @@ const registerUser = async (req, res) => {
             username,
             email,
             password: hashedPassword,
+            department,
         });
 
         const token = jwt.sign(
@@ -75,6 +76,7 @@ const loginUser = async (req, res) => {
                 id: user._id,
                 username: user.username,
                 email: user.email,
+                department: user.department,
             },
         });
     } catch (err) {
@@ -82,4 +84,4 @@ const loginUser = async (req, res) => {
         return res.status(500).json({ message: 'Server error' });
     }
 };
-module.exports = { registerUser,loginUser };
+module.exports = { registerUser, loginUser };
