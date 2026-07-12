@@ -1,5 +1,6 @@
 import { useState, useId, useEffect, useRef, forwardRef } from 'react';
 import { createPortal } from 'react-dom';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Boxes,
@@ -558,7 +559,9 @@ function LoginForm({ onOpenSignup, onLoginSuccess }) {
       storage.setItem('user', JSON.stringify(data.user));
 
       setStatus('success');
-      onLoginSuccess?.(data);
+      setTimeout(() => {
+        onLoginSuccess?.(data);
+      }, 600);
     } catch (err) {
       setStatus('error');
       setErrorMessage(err.message);
@@ -870,11 +873,11 @@ function SignupModal({ isOpen, onClose }) {
 
 export default function AuthPage() {
   const [isSignupOpen, setIsSignupOpen] = useState(false);
+  const navigate = useNavigate();
 
-  // TODO: if using react-router-dom, replace this with useNavigate()
-  // and redirect to your dashboard route, e.g. navigate('/dashboard').
   const handleLoginSuccess = (data) => {
     console.log('Logged in:', data.user);
+    navigate('/dashboard');
   };
 
   return (
