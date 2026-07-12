@@ -8,7 +8,7 @@ const app = express();
 
 const allowedOrigins = [
     'http://localhost:5173',
-    'https://asset-flow-sandy.vercel.app',
+    'https://assetflowbackedn.onrender.com',
 ];
 
 const corsOptions = {
